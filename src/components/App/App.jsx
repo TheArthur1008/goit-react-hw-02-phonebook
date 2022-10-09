@@ -1,8 +1,8 @@
 import { Component } from 'react';
-import ContactForm from './ContactForm/ContactForm';
-import Contacs from './ContactList/ContactList';
-import Filter from './Filter/Filter';
-import styles from './ContactForm/ContactForm.module.css';
+import ContactForm from 'components/ContactForm/ContactForm';
+import Contacts from 'components/ContactList/ContactList';
+import Filter from 'components/Filter/Filter';
+import styles from './App.module.css';
 
 export default class App extends Component {
   state = {
@@ -16,11 +16,21 @@ export default class App extends Component {
   };
 
   hendleAddContact = contact => {
+    if (this.state.contacts.some(({ name }) => name === contact.name)) {
+      alert(`${contact.name} is already in contacts!`);
+      return;
+    }
     this.setState(prev => ({ contacts: [...prev.contacts, contact] }));
   };
 
   hendleFilter = event => {
     this.setState({ filter: event.currentTarget.value });
+  };
+
+  handleDeleteCard = id => {
+     this.setState(prev => ({
+      contacts: prev.contacts.filter(contact => contact.id !== id),
+    }));
   };
 
   render() {
@@ -39,7 +49,10 @@ export default class App extends Component {
           <h2>Contacts</h2>
           <Filter filter={this.state.filter} onFilter={this.hendleFilter} />
 
-          <Contacs contacts={filteredContacts} />
+          <Contacts
+            contacts={filteredContacts}
+            handleDeleteCard={this.handleDeleteCard}
+          />
         </div>
       </div>
     );

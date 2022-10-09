@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import { Component } from 'react';
 import { nanoid } from 'nanoid';
 import styles from './ContactForm.module.css';
 
@@ -17,7 +17,7 @@ export default class ContactForm extends Component {
   hendleSubmitForm = event => {
     event.preventDefault();
     this.setState({ id: nanoid(), name: this.state.name });
-    
+
     const { hendleAddContact } = this.props;
 
     hendleAddContact({
@@ -27,15 +27,14 @@ export default class ContactForm extends Component {
     });
 
     this.hendelReset();
-
   };
+
   hendelReset = () => {
     this.setState({
       name: '',
       number: '',
-    })
-      
-    }
+    });
+  };
 
   render() {
     return (
@@ -67,7 +66,7 @@ export default class ContactForm extends Component {
           />
         </label>
 
-        <button type="submit" className={styles.formButton}>
+        <button type="submit" className={styles.button}>
           Add contacts
         </button>
       </form>
